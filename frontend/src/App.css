@@ -1,19 +1,27 @@
+/* Import Developer Fonts */
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+
+/* Reset and Base Styles */
 * {
-  margin: 0%;
-  padding: 0%;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
 :root {
-  --primary-color: #646cff;
-  --primary-hover: #747bff;
+  --primary-color: #4f46e5;
+  --primary-hover: #4338ca;
   --secondary-color: #2f2f2f;
-  --background-dark: #1a1a1a;
-  --background-darker: #0c0c0c;
-  --text-color: #ffffff;
+  --background-dark: #0f172a;
+  --background-darker: #070b14;
+  --text-color: #e2e8f0;
   --border-radius: 8px;
   --transition-speed: 0.3s;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
 }
+
 
 body {
   font-family: system-ui, -apple-system, sans-serif;
@@ -281,4 +289,303 @@ main .right {
   margin: 0 !important;
   padding: 0 !important;
   background: transparent !important;
+}
+
+
+
+/* Layout */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: 1.5rem 2rem;
+  background-color: var(--background-darker);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header h1 {
+  font-family: var(--font-mono);
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.header-subtitle {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  margin-top: 0.25rem;
+}
+
+.main {
+  flex: 1;
+  padding: 1.5rem;
+  display: flex;
+  gap: 1.5rem;
+  overflow: hidden;
+}
+
+.footer {
+  padding: 1rem;
+  text-align: center;
+  background-color: var(--background-darker);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  font-size: 0.875rem;
+}
+
+/* Editor Section */
+.editor-container {
+  flex: 1;
+  background-color: var(--background-darker);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.editor-wrapper {
+  flex: 1;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  font-family: var(--font-mono);
+}
+
+/* Floating Buttons */
+.floating-buttons {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  gap: 0.75rem;
+  z-index: 10;
+}
+
+/* Button Styles */
+.btn {
+  padding: 0.625rem 1.25rem;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: 500;
+  font-family: var(--font-sans);
+  transition: all var(--transition-speed) ease;
+  font-size: 0.875rem;
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+  box-shadow: 0 2px 4px rgba(79, 70, 229, 0.1);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: #3f3f3f;
+  transform: translateY(-1px);
+}
+
+/* Review Container */
+.review-container {
+  flex: 0;
+  background-color: #1e293b;
+  border-radius: var(--border-radius);
+  padding: 0;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.review-container.expanded {
+  flex: 1;
+  padding: 1.5rem;
+  opacity: 1;
+}
+
+/* Review Content Styling */
+.review-content {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.markdown-content {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: #e2e8f0;
+}
+
+.markdown-content h3 {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.75rem;
+  color: #fff;
+}
+
+.markdown-content h3:first-child {
+  margin-top: 0;
+}
+
+.markdown-content p {
+  margin: 0.75rem 0;
+}
+
+/* Code Block Styling */
+.code-block-wrapper {
+  margin: 1rem 0;
+  background-color: var(--background-darker);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.code-block-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.code-block-lang {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.copy-button {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.copy-button:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.markdown-content pre {
+  margin: 0 !important;
+  padding: 1rem !important;
+  background-color: var(--background-darker) !important;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  overflow-x: auto;
+}
+
+.markdown-content code {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  padding: 0.2em 0.4em;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+/* Loading Animation */
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 1rem;
+}
+
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border-top-color: var(--primary-color);
+  animation: spin 1s linear infinite;
+}
+
+.loader-text {
+  color: #94a3b8;
+  font-size: 0.875rem;
+}
+
+.btn.loading {
+  position: relative;
+  padding-left: 2.5rem;
+}
+
+.btn.loading::before {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .main {
+    flex-direction: column;
+  }
+
+  .review-container.expanded {
+    min-height: 400px;
+  }
+
+  .floating-buttons {
+    position: static;
+    margin-top: 1rem;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
