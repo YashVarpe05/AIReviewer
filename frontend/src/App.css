@@ -4,6 +4,24 @@
   box-sizing: border-box;
 }
 
+:root {
+  --primary-color: #646cff;
+  --primary-hover: #747bff;
+  --secondary-color: #2f2f2f;
+  --background-dark: #1a1a1a;
+  --background-darker: #0c0c0c;
+  --text-color: #ffffff;
+  --border-radius: 8px;
+  --transition-speed: 0.3s;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: var(--background-dark);
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
 html,
 body,
 #root {
@@ -60,4 +78,207 @@ main .right {
   padding: 1rem 2rem;
   font-size: 1.5rem;
   overflow: auto;
+}
+
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+
+/* Layout */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: 1rem 2rem;
+  background-color: var(--background-darker);
+  border-bottom: 1px solid #333;
+}
+
+.header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.main {
+  flex: 1;
+  padding: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  overflow: hidden;
+}
+
+.footer {
+  padding: 1rem;
+  text-align: center;
+  background-color: var(--background-darker);
+  border-top: 1px solid #333;
+  color: #666;
+}
+
+/* Editor Section */
+.editor-container {
+  flex: 1;
+  background-color: var(--background-darker);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-wrapper {
+  flex: 1;
+  margin-bottom: 1rem;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+/* Button Styles */
+.button-group {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.btn {
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all var(--transition-speed) ease;
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: #3f3f3f;
+  transform: translateY(-1px);
+}
+
+/* Review Container */
+.review-container {
+  flex: 0;
+  background-color: #2a2a2a;
+  border-radius: var(--border-radius);
+  padding: 0;
+  overflow: hidden;
+  transition: all 0.5s ease-in-out;
+  opacity: 0;
+}
+
+.review-container.expanded {
+  flex: 1;
+  padding: 1.5rem;
+  opacity: 1;
+}
+
+/* Markdown Content */
+.markdown-content {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #e0e0e0;
+}
+
+.markdown-content pre {
+  background-color: var(--background-darker) !important;
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+}
+
+.markdown-content code {
+  font-family: "Fira Code", monospace;
+  font-size: 0.9rem;
+}
+
+/* Loading Animation */
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #333;
+  border-radius: 50%;
+  border-top-color: var(--primary-color);
+  animation: spin 1s linear infinite;
+}
+
+.btn.loading {
+  position: relative;
+  padding-left: 2.5rem;
+}
+
+.btn.loading::before {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .main {
+    flex-direction: column;
+  }
+
+  .review-container.expanded {
+    min-height: 300px;
+  }
+}
+
+/* Editor Customization */
+.editor-wrapper textarea:focus {
+  outline: none;
+}
+
+.editor-wrapper pre {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
 }

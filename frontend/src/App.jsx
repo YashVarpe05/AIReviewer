@@ -1,35 +1,66 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import "prismjs/themes/prism-tomorrow.css";
-// import "prismjs/components/prism-jsx";
 import prism from "prismjs";
 import Editor from "react-simple-code-editor";
-import "./App.css";
 import MarkDown from "react-markdown";
-import axois from "axios";
+import axios from "axios";
 import rehypeHighlight from "rehype-highlight";
 import "highlight.js/styles/github-dark.css";
+import "./app.css";
 
-const App = () => {
-	const [code, setCode] = useState(`function sum(){
-              return 1+1;
-              }`);
-	const [review, setReview] = useState(``);
+const DEFAULT_CODE = `function sum() {
+  return a + b;
+}`;
+
+export default function App() {
+	const [code, setCode] = useState(DEFAULT_CODE);
+	const [review, setReview] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
+	const [isExpanded, setIsExpanded] = useState(false);
+
 	useEffect(() => {
 		prism.highlightAll();
 	}, []);
 
 	async function reviewCode() {
-		const response = await axois.post("http://localhost:3000/ai/get-review", {
-			code,
-		});
-		setReview(response.data);
+		try {
+			setIsLoading(true);
+			setIsExpanded(true);
+			const response = await axios.post("http://localhost:3000/ai/get-review", {
+				code,
+			});
+			setReview(response.data);
+		} catch (error) {
+			console.error("Error reviewing code:", error);
+			setReview("Error reviewing code. Please try again.");
+		} finally {
+			setIsLoading(false);
+		}
+	}
+
+	function clearCode() {
+		setCode("");
+		setReview("");
+		setIsExpanded(false);
+	}
+
+	function resetCode() {
+		setCode(DEFAULT_CODE);
+		setReview("");
+		setIsExpanded(false);
 	}
 
 	return (
-		<>
-			<main>
-				<div className="left">
-					<div className="code">
+		<div className="app">
+			<header className="header">
+				<h1>Code Review AI</h1>
+			</header>
+
+			<main className="main">
+				<div className="editor-container">
+					<div className="editor-wrapper">
 						<Editor
 							value={code}
 							onValueChange={(code) => setCode(code)}
@@ -40,23 +71,59 @@ const App = () => {
 							style={{
 								fontFamily: '"Fira code", "Fira Mono", monospace',
 								fontSize: 14,
-								border: "1px solid #ddd",
-								borderRadius: "5px",
 								height: "100%",
 								width: "100%",
+								backgroundColor: "transparent",
 							}}
 						/>
 					</div>
-					<div onClick={reviewCode} className="review">
-						Review
+					<div className="button-group">
+						<button onClick={clearCode} className="btn btn-secondary">
+							Clear
+						</button>
+						<button onClick={resetCode} className="btn btn-secondary">
+							Reset
+						</button>
+						<button
+							onClick={reviewCode}
+							className={`btn btn-primary ${isLoading ? "loading" : ""}`}
+							disabled={isLoading}
+						>
+							{isLoading ? "Reviewing..." : "Review"}
+						</button>
 					</div>
 				</div>
-				<div className="right">
-					<MarkDown rehypePlugins={[rehypeHighlight]}>{review}</MarkDown>
+
+				<div className={`review-container ${isExpanded ? "expanded" : ""}`}>
+					{isLoading ? (
+						<div className="loader-container">
+							<div className="loader"></div>
+						</div>
+					) : (
+						<MarkDown
+							rehypePlugins={[rehypeHighlight]}
+							components={{
+								code({ children, className, ...props }) {
+									return (
+										<code
+											className={`custom-code-class ${className || ""}`}
+											{...props}
+										>
+											{children}
+										</code>
+									);
+								},
+							}}
+						>
+							{review}
+						</MarkDown>
+					)}
 				</div>
 			</main>
-		</>
-	);
-};
 
-export default App;
+			<footer className="footer">
+				<p>Code Review AI </p>
+			</footer>
+		</div>
+	);
+}
