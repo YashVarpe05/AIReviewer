@@ -10,12 +10,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "axios": "^1.7.9",
-    "prismjs": "^1.29.0",
+    "@rollup/rollup-win32-x64-msvc": "^4.40.0",
+    "axios": "^1.8.4",
+    "framer-motion": "^12.7.3",
+    "highlight.js": "^11.11.1",
+    "lucide-react": "^0.488.0",
+    "prismjs": "^1.30.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-markdown": "^10.0.0",
+    "react-markdown": "^10.1.0",
     "react-simple-code-editor": "^0.14.1",
+    "react-syntax-highlighter": "^15.6.1",
     "rehype-highlight": "^7.0.2"
   },
   "devDependencies": {
